@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import swal from 'sweetalert'
 import api from '../services/api';
 
-function Home() {
+function Test() {
 
   const[board,     setBoard]    = useState('')
   const[list,     setList]      = useState('')
@@ -123,4 +123,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Test;
