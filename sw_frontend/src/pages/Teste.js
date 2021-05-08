@@ -34,9 +34,9 @@ function Test() {
     } else{
 
       /**
-       * Criar Board com o Nome Digitado
-       * Capturar o ID do Board e utilizar para criar a lista
-       * captiurar o Id da Lista para criar o CAR
+       * Criar BOARD com o Nome Digitado
+       * Capturar o ID do BOARD e utilizar para criar a LISTA
+       * captiurar o Id da LISTA para criar o CARD
       */
 
       try {
@@ -113,7 +113,14 @@ function Test() {
               onChange={ e =>  setCard(e.target.value)}
             />
           </div>
-          
+        <div class="form-group col-md-4">
+          <label for="inputState">Cor</label>
+            <select id="inputState" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+        </div>
+           
           <button type="submit" class="btn btn-dark">Enviar Teste</button>
         </form>
         <nav className="my-2 my-md-0 mr-md-3">
