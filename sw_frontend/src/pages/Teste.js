@@ -7,6 +7,10 @@ function Test() {
   const[board,     setBoard]    = useState('')
   const[list,     setList]      = useState('')
   const[card,     setCard]      = useState('')
+  const[descCard,     setDescCard]   = useState('')
+  const[colorBoard,   setColorBoard] = useState('')
+  const[nameChecklist, setNameChecklist] = useState('')
+  const[itemCheckItem, setItemCheckItem] = useState('')
 
   // const history = useHistory()
 
@@ -17,13 +21,21 @@ function Test() {
   const data = {
     board,
     list,
-    card
+    card,
+    descCard,
+    colorBoard,
+    nameChecklist,
+    itemCheckItem,
   };
 
   if(
-    data.board ==="" || 
+    data.board ===""  || 
     data.card  ===""  || 
-    data.list  ===""  ){
+    data.list  ===""  ||
+    data.descCard ===""||
+    data.colorBoard===""||
+    data.itemCheckItem===""||
+    data.nameChecklist===""){
 
     swal({
       title: "Erro Encontrado!",
@@ -43,7 +55,7 @@ function Test() {
         /** NOVO BOARD */
         const idBoard = 
           await api.post(
-            `${process.env.REACT_APP_HOST}/boards/?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&name=${data.board}`)
+            `${process.env.REACT_APP_HOST}/boards/?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&name=${data.board}&prefs_background=${data.colorBoard}`)
              const responseIdBoard = idBoard.data.id
               console.log("ID do Board Criado:", responseIdBoard)
 
@@ -57,10 +69,24 @@ function Test() {
         /** NOVO CARD*/
         const idCard =
           await api.post(
-            `${process.env.REACT_APP_HOST}/cards?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&idList=${responseIdList}&name=${data.card}`)
+            `${process.env.REACT_APP_HOST}/cards?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&idList=${responseIdList}&name=${data.card}&desc=${data.descCard}`)
               const  responseIdCard = idCard.data.id
               console.log("ID do Card Criado", responseIdCard)
-          
+
+        /** NOVO CheckList*/              
+        const checklist =
+          await api.post(
+            `${process.env.REACT_APP_HOST}/checklists?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&idCard=${responseIdCard}&name=${data.nameChecklist}`)
+              const responseIdChecklist = checklist.data.id
+              console.log("ID do Cheklist Criado", responseIdChecklist)
+
+        /** NOVO ItemCheckList*/              
+        const itemChecklist =
+          await api.post(
+            `${process.env.REACT_APP_HOST}/checklists/${responseIdChecklist}/checkItems?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&name=${data.itemCheckItem}`)
+              const responseIdItemchecklist = itemChecklist.data.id
+              console.log("ID do Cheklist Criado", responseIdItemchecklist)              
+
           swal({
             title: "Dados Enviados!",
             icon: "success",
@@ -75,13 +101,13 @@ function Test() {
                 button: "Contate o Administrador",
                 }); 
               } 
-      }
+    }
   }
 
   return (
     <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-light border-bottom shadow-sm">
       <div className="container">
-        <h1 className="text-primary text-justify"> Página de Teste - SlideWorks </h1>
+        <h1 className="text-primary text-justify"> Página Inicial - SlideWorks </h1>
 
         <form onSubmit={enviarDados}>
           <div class="form-group">
@@ -90,8 +116,22 @@ function Test() {
               type="text"
               placeholder="Nome do Board" 
               value={board}
-              onChange={ e =>  setBoard(e.target.value)}
+              onChange={ e => setBoard(e.target.value)}
             />
+
+            <label for="selectCor">Cor do Board</label>
+              <select 
+                id="selectCor"
+                class="form-control"
+                value={colorBoard}
+                onChange={e => setColorBoard(e.target.value)}
+              >
+                <option value="blue"   selected >  </option>
+                <option value="orange"> Laranjado  </option>
+                <option value="green">  Verde      </option>
+                <option value="red">    Vermelho   </option>
+                <option value="pink">   Rosa       </option>
+              </select>
           </div>
 
           <div class="form-group">
@@ -100,7 +140,7 @@ function Test() {
               type="text"
               placeholder="Nome da lista" 
               value={list}
-              onChange={ e =>  setList(e.target.value)}
+              onChange={ e => setList(e.target.value)}
             />
           </div>
 
@@ -110,20 +150,48 @@ function Test() {
               type="text"
               placeholder="Nome do Card" 
               value={card}
-              onChange={ e =>  setCard(e.target.value)}
+              onChange={ e => setCard(e.target.value)}
             />
           </div>
-        <div class="form-group col-md-4">
-          <label for="inputState">Cor</label>
-            <select id="inputState" class="form-control">
-              <option selected>Choose...</option>
-              <option>...</option>
-            </select>
-        </div>
-           
+
+          <div class="form-group">
+            <textarea
+              class="form-control" 
+              type="textarea"
+              placeholder="Descrição do Card" 
+              value={descCard}
+              onChange={ e =>  setDescCard(e.target.value)}
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              class="form-control" 
+              type="text"
+              placeholder="Nome do ChecList" 
+              value={nameChecklist}
+              onChange={ e =>  setNameChecklist(e.target.value)}
+            />
+
+            <label for="inputState">Item do CheckList</label>
+              <select 
+                id="inputState"
+                class="form-control"
+                value={itemCheckItem}
+                onChange={e => setItemCheckItem(e.target.value)}
+              >
+                <option value="Outros" selected>Outros</option>
+                <option value="Urgente">Urgente</option>
+                <option value="Não Urgente">Não Urgente</option>
+              </select>
+            
+          </div>
+
           <button type="submit" class="btn btn-dark">Enviar Teste</button>
         </form>
-        <nav className="my-2 my-md-0 mr-md-3">
+        
+        <nav 
+          className="my-2 my-md-0 mr-md-3">
         </nav>
     </div>
   </div>

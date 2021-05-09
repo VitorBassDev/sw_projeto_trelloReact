@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import swal from 'sweetalert'
 import api from '../services/api';
 
-function Test() {
+function Home() {
 
   const[board,     setBoard]    = useState('')
   const[list,     setList]      = useState('')
@@ -12,7 +12,7 @@ function Test() {
   const[nameChecklist, setNameChecklist] = useState('')
   const[itemCheckItem, setItemCheckItem] = useState('')
 
-  // const history = useHistory()
+  const[link, getLink] = useState()
 
   async function enviarDados(e) {
   
@@ -55,9 +55,14 @@ function Test() {
         /** NOVO BOARD */
         const idBoard = 
           await api.post(
-            `${process.env.REACT_APP_HOST}/boards/?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&name=${data.board}&prefs_background=${data.colorBoard}`)
+            `${process.env.REACT_APP_HOST}/boards/?key=${process.env.REACT_APP_KEY}&token=${process.env.REACT_APP_TOKEN}&name=${data.board}&prefs_background=${data.colorBoard}&prefs_permissionLevel=public`)
              const responseIdBoard = idBoard.data.id
+             const responseCreatedBoard = idBoard.data.url
+             getLink(responseCreatedBoard)
               console.log("ID do Board Criado:", responseIdBoard)
+              console.log("Link do Board Criado:", link)
+              //localStorage.setItem('boarCriado', responseCreatedBoard )
+              console.log('Link do Board', responseCreatedBoard)
 
         /** NOVA LISTA */ 
         const idList =
@@ -89,9 +94,12 @@ function Test() {
 
           swal({
             title: "Dados Enviados!",
+            // text: `Numero do Id Gerado: ${responseCreatedBoard}`,
             icon: "success",
             button: "Ok",
             }); 
+            
+            //await history.push(`../../${responseCreatedBoard}`)
                   
             } catch (error) {
               swal({
@@ -104,10 +112,14 @@ function Test() {
     }
   }
 
+  // async function buscarBoard(e){
+  //   window.location.href = `${link}`;
+  // }
+
   return (
     <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-light border-bottom shadow-sm">
       <div className="container">
-        <h1 className="text-primary text-justify"> Página Inicial - SlideWorks </h1>
+        <h1 className="text-primary text-justify"> Página Teste - SlideWorks </h1>
 
         <form onSubmit={enviarDados}>
           <div class="form-group">
@@ -192,10 +204,12 @@ function Test() {
         
         <nav 
           className="my-2 my-md-0 mr-md-3">
-        </nav>
+        </nav>        
+
+        <a href={link}>Buscar</a>
     </div>
   </div>
   );
 }
 
-export default Test;
+export default Home;
