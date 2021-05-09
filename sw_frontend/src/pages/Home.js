@@ -61,7 +61,6 @@ function Home() {
              getLink(responseCreatedBoard)
               console.log("ID do Board Criado:", responseIdBoard)
               console.log("Link do Board Criado:", link)
-              //localStorage.setItem('boarCriado', responseCreatedBoard )
               console.log('Link do Board', responseCreatedBoard)
 
         /** NOVA LISTA */ 
@@ -94,13 +93,11 @@ function Home() {
 
           swal({
             title: "Dados Enviados!",
-            // text: `Numero do Id Gerado: ${responseCreatedBoard}`,
             icon: "success",
+            text: "Feche a janela e clique em 'BUSCAR' ",
             button: "Ok",
             }); 
-            
-            //await history.push(`../../${responseCreatedBoard}`)
-                  
+                              
             } catch (error) {
               swal({
                 title: "Erro Inesperado",
@@ -112,103 +109,131 @@ function Home() {
     }
   }
 
-  // async function buscarBoard(e){
-  //   window.location.href = `${link}`;
-  // }
-
   return (
-    <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-light border-bottom shadow-sm">
+    <div className="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 mt-2 bg-light ">
       <div className="container">
-        <h1 className="text-primary text-justify"> Página Teste - SlideWorks </h1>
+        <h1 className="text-dark text-center mt-2 mb-4"> Página Inicial - SlideWorks </h1>
 
         <form onSubmit={enviarDados}>
-          <div class="form-group">
-            <input
-              class="form-control" 
-              type="text"
-              placeholder="Nome do Board" 
-              value={board}
-              onChange={ e => setBoard(e.target.value)}
-            />
-
-            <label for="selectCor">Cor do Board</label>
+          <div class="row">
+            <div class="form-group col-md-6">
+              <h4>
+                <label class="mb-1 font-weight-bold">Nome do novo Board</label>
+              </h4>
+              <input
+                class="form-control mb-2" 
+                type="text"
+                placeholder="Escolha nome para seu novo Board" 
+                value={board}
+                onChange={ e => setBoard(e.target.value)}
+              />
+            </div>
+            
+            <div class="form-group col-md-4">
+              <h4>
+                <label class="mb-1 font-weight-bold" for="selectCor">Cor do Board</label>
+              </h4>
               <select 
                 id="selectCor"
-                class="form-control"
+                class="form-control mb-2" 
                 value={colorBoard}
                 onChange={e => setColorBoard(e.target.value)}
               >
-                <option value="blue"   selected >  </option>
+                <option selected >  Escolha uma cor</option>
                 <option value="orange"> Laranjado  </option>
                 <option value="green">  Verde      </option>
                 <option value="red">    Vermelho   </option>
                 <option value="pink">   Rosa       </option>
               </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6">
+              <h4>
+                  <label class="mb-1 font-weight-bold" for="selectCor">Nome da nova Lista</label>
+              </h4>
+              <input
+                class="form-control mb-2" 
+                type="text"
+                placeholder="Nome da nova LISTA" 
+                value={list}
+                onChange={ e => setList(e.target.value)}
+              />
+            </div>
+          
+            <div class="form-group col-md-6">
+              <h4>
+                <label class="mb-1 font-weight-bold" for="selectCor">Nome do novo Card</label>
+              </h4>
+              <input
+                class="form-control mb-2" 
+                type="text"
+                placeholder="Nome do novo CARD" 
+                value={card}
+                onChange={ e => setCard(e.target.value)}
+              />
+            </div>
           </div>
 
           <div class="form-group">
-            <input
-              class="form-control" 
-              type="text"
-              placeholder="Nome da lista" 
-              value={list}
-              onChange={ e => setList(e.target.value)}
-            />
+            <h4>
+              <label class="mb-1 font-weight-bold" for="selectCor">Descrição do CARD</label>
+             </h4>
+              <textarea
+                class="form-control mb-2" 
+                type="textarea"
+                placeholder="Descrição do novo CARD" 
+                value={descCard}
+                onChange={ e =>  setDescCard(e.target.value)}
+              />
           </div>
-
-          <div class="form-group">
-            <input
-              class="form-control" 
-              type="text"
-              placeholder="Nome do Card" 
-              value={card}
-              onChange={ e => setCard(e.target.value)}
-            />
-          </div>
-
-          <div class="form-group">
-            <textarea
-              class="form-control" 
-              type="textarea"
-              placeholder="Descrição do Card" 
-              value={descCard}
-              onChange={ e =>  setDescCard(e.target.value)}
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              class="form-control" 
-              type="text"
-              placeholder="Nome do ChecList" 
-              value={nameChecklist}
-              onChange={ e =>  setNameChecklist(e.target.value)}
-            />
-
-            <label for="inputState">Item do CheckList</label>
-              <select 
-                id="inputState"
-                class="form-control"
-                value={itemCheckItem}
-                onChange={e => setItemCheckItem(e.target.value)}
-              >
-                <option value="Outros" selected>Outros</option>
-                <option value="Urgente">Urgente</option>
-                <option value="Não Urgente">Não Urgente</option>
-              </select>
-            
-          </div>
-
-          <button type="submit" class="btn btn-dark">Enviar Teste</button>
+          
+          <div class="row">
+            <div class="form-group col-md-6">
+              <h4>
+                <label class="mb-1 font-weight-bold" for="selectCor">Nome do novo CheckList</label>
+              </h4>
+              <input
+                class="form-control mb-2" 
+                type="text"
+                placeholder="Nome do novo CHECKLIST" 
+                value={nameChecklist}
+                onChange={ e =>  setNameChecklist(e.target.value)}
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <h4>
+                <label class="mb-1 font-weight-bold" for="selectCor">Item do CheckList</label>
+              </h4>
+                <select 
+                  id="inputState"
+                  class="form-control"
+                  value={itemCheckItem}
+                  onChange={e => setItemCheckItem(e.target.value)}
+                >
+                  <option selected>Selecione um Item</option>
+                  <option value="Urgente">Urgente</option>
+                  <option value="Não Urgente">Não Urgente</option>
+                </select>
+              </div>
+            </div>
+          <button type="submit" class="btn btn-dark mt-3">Salvar no Trello</button>
         </form>
-        
-        <nav 
-          className="my-2 my-md-0 mr-md-3">
-        </nav>        
 
-        <a href={link}>Buscar</a>
+        <div class="row mt-5 col">
+          <button type="button" class="btn btn-info">
+            <a  type="button" href={link}>
+              <h4>
+                Buscar
+              </h4>  
+            </a>
+          </button>
+        </div>
+        
     </div>
   </div>
+  
   );
 }
 
