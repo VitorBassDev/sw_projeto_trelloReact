@@ -42,5 +42,5 @@ Consumir a API do [Trello](https://developer.atlassian.com/cloud/trello/rest/api
 
 ## Executção em Ambiente Hospedado
 
-1. Acesso o [Link](https://github.com/VitorBassDev/sw_projeto_trelloReact/tree/master/sw_frontend)(`https://github.com/VitorBassDev/sw_projeto_trelloReact/tree/master/sw_frontend`).
+1. Acesso o [Link](https://sw-projeto-trello-react.vercel.app/)(`https://sw-projeto-trello-react.vercel.app/`).
 2. Preencha o formulário.
